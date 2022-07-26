@@ -30,8 +30,8 @@ class UserManager(BaseUserManager):
           password=password,
           username=username,
       )
-      user.is_admin = True
       user.is_staff = True
+      user.is_admin = True
       user.save(using=self._db)
       return user
 
