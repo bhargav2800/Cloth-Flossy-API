@@ -3,49 +3,41 @@ from django.contrib.auth.models import AbstractUser,BaseUserManager
 from phonenumber_field.modelfields import PhoneNumberField
 
 # Create your models here.
-
-class UserManager(BaseUserManager):
-  def create_user(self, email, username, password=None, password2=None):
-      """
-      Creates and saves a User with the given email, name, tc and password.
-      """
-      if not email:
-          raise ValueError('User must have an email address')
-
-      user = self.model(
-          email=self.normalize_email(email),
-          username=username,
-      )
-
-      user.set_password(password)
-      user.save(using=self._db)
-      return user
-
-  # def create_superuser(self, email, username, password=None):
-  #     """
-  #     Creates and saves a superuser with the given email, name, tc and password.
-  #     """
-  #     user = self.create_user(
-  #         email,
-  #         password=password,
-  #         username=username,
-  #     )
-  #     user.is_staff = True
-  #     user.is_admin = True
-  #     user.save(using=self._db)
-  #     return user
+#
+# class UserManager(BaseUserManager):
+#   def create_user(self, email, username, password=None, password2=None):
+#       """
+#       Creates and saves a User with the given email, name, tc and password.
+#       """
+#       if not email:
+#           raise ValueError('User must have an email address')
+#
+#       user = self.model(
+#           email=self.normalize_email(email),
+#           username=username,
+#       )
+#
+#       user.set_password(password)
+#       user.save(using=self._db)
+#       return user
+#
+#   def create_superuser(self, email, username, password=None):
+#       """
+#       Creates and saves a superuser with the given email, name, tc and password.
+#       """
+#       user = self.create_user(
+#           email,
+#           password=password,
+#           username=username,
+#       )
+#       user.is_admin = True
+#       user.save(using=self._db)
+#       return user
 
 
 class User(AbstractUser):
     email = models.EmailField(unique=True)
-    is_active = models.BooleanField(default=True)
-    is_admin = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    objects = UserManager()
-
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'email'  # For login now we will use Email insted of Username
     REQUIRED_FIELDS = ['username']
 
     def __str__(self):
