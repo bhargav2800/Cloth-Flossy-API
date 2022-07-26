@@ -1,1 +1,1 @@
-web: gunicorn cloth_store.wsgi
+web: gunicorn cloth_store_api.wsgi
