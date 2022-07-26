@@ -321,7 +321,7 @@ class PaymentHandler(APIView):
         captured_data = json.loads(request.body)
         captured_header = request.headers
         try:
-            client.utility.verify_webhook_signature(str(request.body, 'utf-8'),captured_header['X-Razorpay-Signature'], '28001398bhargav')
+            client.utility.verify_webhook_signature(str(request.body, 'utf-8'),captured_header['X-Razorpay-Signature'], os.environ.get('RazorpayWebhookSecretKey'))
             if captured_data['event'] == 'payment.failed':
                 email = captured_data['payload']['payment']['entity']['notes']['email']
                 customer = Customer.objects.get(email=email)
