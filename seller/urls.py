@@ -6,8 +6,8 @@ router = DefaultRouter()
 router.register('view_all_products', ViewAllProducts, basename='view_all_products')
 
 urlpatterns = [
-    path('', include(router.urls)),
-    path('product/', ProductUpdateDeleteViewCreate.as_view(), name='product_create'),
+    path('view_all_products/', ViewAllProducts.as_view(), name="view_self_products"),
+    path('product/', ProductUpdateDeleteViewCreate.as_view(), name='product_seller'),
     path('product/view_all_reviews/<int:id>/', ViewProductReviews.as_view(), name='view_product_reviews'),
     path('view_orders/', ViewOrders.as_view(), name='view_orders'),
     path('InvoiceOrder/UpdateStatus/<int:id>/', ViewOrders.as_view(), name='invoice_order_update_status'),

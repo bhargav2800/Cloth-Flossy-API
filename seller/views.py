@@ -4,40 +4,42 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
+
+from customer.serializers import InvoiceSerializer
 from .serializers import ProductsSerializer, ProductReviewsSerializer, UpdateInvoiceStatusSerializer, UpdateReturnOrderStatusSerializer, ReturnProductSerializer, ReplaceProductSerializer, UpdateReplaceOrderStatusSerializer
 from rest_framework import viewsets, mixins
 from .models import Product,Brand
 from customer.models import Reviews, Invoice, ReturnProducts, ReplaceProducts
 
-class ViewAllProducts(viewsets.ViewSet):
+class ViewAllProducts(APIView):
     permission_classes = [IsAuthenticated, IsAdminUser]
-    def list(self, request):
+    def get(self, request):
+        # print(request.kwargs)3
         products = Product.objects.filter(brand__user=self.request.user)
         serializer = ProductsSerializer(products, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class ProductUpdateDeleteViewCreate(APIView):
-    permission_classes = [IsAuthenticated,IsAdminUser]
+    permission_classes = [IsAuthenticated, IsAdminUser]
     def get_product_object(self, id):
         try:
             return Product.objects.get(id=id, brand__user=self.request.user)
         except Product.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-    def get(self, request):
+    def get(self, request, **kwargs):
         product = self.get_product_object(request.data['id'])
         if isinstance(product, Response):
             return Response({'msg':'Product Does Not Exist !'}, status=status.HTTP_404_NOT_FOUND)
         serializer = ProductsSerializer(product)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
         serializer = ProductsSerializer(data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save(brand=Brand.objects.get(user=self.request.user))
         return Response({'msg':'Product Created Successfully'}, status=status.HTTP_200_OK)
-
 
     def put(self, request):
         product = self.get_product_object(request.data['id'])
@@ -62,7 +64,7 @@ class ViewProductReviews(APIView):
     def get(self, request, id):
         products_reviews = Reviews.objects.filter(product__brand__user=self.request.user, product__id=id)
         serializer = ProductReviewsSerializer(products_reviews, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class ViewOrders(APIView):

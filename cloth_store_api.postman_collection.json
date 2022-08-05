@@ -1,0 +1,1386 @@
+{
+	"info": {
+		"_postman_id": "ade54c76-911a-4a78-9702-cb8567c30402",
+		"name": "cloth_store_api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21260431"
+	},
+	"item": [
+		{
+			"name": "account",
+			"item": [
+				{
+					"name": "register_customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"bhargav_customer111\",\n    \"email\":\"28001398bhargav11@gmail.com\",\n    \"password\":\"123456\",\n    \"password2\":\"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}register_customer/",
+							"host": [
+								"{{local}}register_customer"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login_customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody)",
+									"pm.environment.set('ACCESS_TOKEN', 'Bearer ' + jsonData.token.access)",
+									"pm.environment.set('REFRESH_TOKEN', 'Bearer ' + jsonData.token.refresh)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"28001398bhargav@gmail.com\",\n    \"password\":\"123456@As\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}login_customer/",
+							"host": [
+								"{{local}}login_customer"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile_customer_view",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "profile_customer_delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}profile_customer/",
+							"host": [
+								"{{local}}profile_customer"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile_customer_update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "bhargav_customer",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "bhargav_customer",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/home/bhargav/Downloads/img-20220611T174709Z-001/img/404.png"
+								},
+								{
+									"key": "email",
+									"value": "28001398bhargav@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "Male",
+									"type": "text"
+								},
+								{
+									"key": "mobile_no",
+									"value": "+919662316939",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "22",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}profile_customer/",
+							"host": [
+								"{{local}}profile_customer"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change_password_customer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}change_password_customer/",
+							"host": [
+								"{{local}}change_password_customer"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "send_password_reset_email",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"28001398social@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}send-password-reset-email/",
+							"host": [
+								"{{local}}send-password-reset-email"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset_password_customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\":\"123456@As\",\n    \"password2\":\"123456@As\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}reset-password/MTY/b8rf2f-651bfeaa50d3a9fa34b04c1a9d8da062/",
+							"host": [
+								"{{local}}reset-password"
+							],
+							"path": [
+								"MTY",
+								"b8rf2f-651bfeaa50d3a9fa34b04c1a9d8da062",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register_brand",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"trendsssss_brand\",\n    \"email\":\"trendsssss@gmail.com\",\n    \"password\":\"123456@As\",\n    \"password2\":\"123456@As\",\n    \"brand_name\":\"Trends\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}register_brand/",
+							"host": [
+								"{{local}}register_brand"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login_brand",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody)",
+									"pm.environment.set('ACCESS_TOKEN', 'Bearer ' + jsonData.token.access)",
+									"pm.environment.set('REFRESH_TOKEN', 'Bearer ' + jsonData.token.refresh)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"zudio@gmail.com\",\n    \"password\":\"123456@As\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}login_brand/",
+							"host": [
+								"{{local}}login_brand"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile_brand_view",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "profile_brand_delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}profile_brand/",
+							"host": [
+								"{{local}}profile_brand"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile_brand_update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"zudio@gmail.com\",\n    \"username\": \"zudio_brand\",\n    \"brand_name\": \"Zudio\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}profile_brand/",
+							"host": [
+								"{{local}}profile_brand"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Seller",
+			"item": [
+				{
+					"name": "view all products",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "product_create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}seller/product/create/",
+							"host": [
+								"{{local}}seller"
+							],
+							"path": [
+								"product",
+								"create",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product_view",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\":2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}seller/product/view/",
+							"host": [
+								"{{local}}seller"
+							],
+							"path": [
+								"product",
+								"view",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product_delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\":5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}seller/product/",
+							"host": [
+								"{{local}}seller"
+							],
+							"path": [
+								"product",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product_update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}seller/product/update/",
+							"host": [
+								"{{local}}seller"
+							],
+							"path": [
+								"product",
+								"update",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Product Reviews",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}seller/product/view_all_reviews/1/",
+							"host": [
+								"{{local}}seller"
+							],
+							"path": [
+								"product",
+								"view_all_reviews",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Orders",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}seller/view_orders/",
+							"host": [
+								"{{local}}seller"
+							],
+							"path": [
+								"view_orders",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Returned Order",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}seller/view_return_orders/",
+							"host": [
+								"{{local}}seller"
+							],
+							"path": [
+								"view_return_orders",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Replace Order",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{local}}seller/view_replace_orders/",
+							"host": [
+								"{{local}}seller"
+							],
+							"path": [
+								"view_replace_orders",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Invoice Order Status",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\":\"delibjhns\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}seller/InvoiceOrder/UpdateStatus/2/",
+							"host": [
+								"{{local}}seller"
+							],
+							"path": [
+								"InvoiceOrder",
+								"UpdateStatus",
+								"2",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Returned Product Status",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"pick_up_date\":\"2022-07-25T13:34:00.000\",\n    \"pick_up_status\":\"Will Soon Pick Up the Product\",\n    \"refund_status\":\"Not Initiated\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}seller/ReturnOrder/UpdateStatus/1/",
+							"host": [
+								"{{local}}seller"
+							],
+							"path": [
+								"ReturnOrder",
+								"UpdateStatus",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Replace Order Status",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"replace_pickup_date\" : \"2022-07-25T13:34:00.000\",\n    \"replace_pickup_status\" : \"Will Soon Pick Up the Product\",\n    \"replace_delivery_status\" : \"Not Packed\",\n    \"replace_product_size\" : 1,\n    \"replace_product_color\" : 1\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}seller/ReplaceOrder/UpdateStatus/4/",
+							"host": [
+								"{{local}}seller"
+							],
+							"path": [
+								"ReplaceOrder",
+								"UpdateStatus",
+								"4",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "view all products",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "View Product Detail",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Search Product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/customer/",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"customer",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Trending Products",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "View Cart",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Add To Cart",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"added_quantity\":\n}"
+						},
+						"url": {
+							"raw": "{{local}}customer/cart/product/1/",
+							"host": [
+								"{{local}}customer"
+							],
+							"path": [
+								"cart",
+								"product",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product Quantity In cart",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"added_quantity\":2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}customer/cart/product/1/",
+							"host": [
+								"{{local}}customer"
+							],
+							"path": [
+								"cart",
+								"product",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove From Cart",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}customer/cart/product/4/",
+							"host": [
+								"{{local}}customer"
+							],
+							"path": [
+								"cart",
+								"product",
+								"4",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View WishList",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Add To WishList",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}customer/wishlist/product/4/",
+							"host": [
+								"{{local}}customer"
+							],
+							"path": [
+								"wishlist",
+								"product",
+								"4",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove From WishList",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}customer/wishlist/product/1/",
+							"host": [
+								"{{local}}customer"
+							],
+							"path": [
+								"wishlist",
+								"product",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add product review",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"review\": \"not good product 3 star only\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}customer/product/review/1/",
+							"host": [
+								"{{local}}customer"
+							],
+							"path": [
+								"product",
+								"review",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product Review",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}customer/product/review/2/",
+							"host": [
+								"{{local}}customer"
+							],
+							"path": [
+								"product",
+								"review",
+								"2",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upadate Product Review",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"review\":\"Updated Review\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}customer/product/review/2/",
+							"host": [
+								"{{local}}customer"
+							],
+							"path": [
+								"product",
+								"review",
+								"2",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Fav Brands",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}customer/fav_brands//",
+							"host": [
+								"{{local}}customer"
+							],
+							"path": [
+								"fav_brands",
+								"",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Fav Brand",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}customer/fav_brands/8/",
+							"host": [
+								"{{local}}customer"
+							],
+							"path": [
+								"fav_brands",
+								"8",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Fav Brands",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}customer/fav_brands/9/",
+							"host": [
+								"{{local}}customer"
+							],
+							"path": [
+								"fav_brands",
+								"9",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buy Cart COD",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"address\":\"iukgcikcnd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}customer/order/",
+							"host": [
+								"{{local}}customer"
+							],
+							"path": [
+								"order",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buy Cart Razorpay",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"address\":\"iukgcikcnd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}customer/order_razorpay/",
+							"host": [
+								"{{local}}customer"
+							],
+							"path": [
+								"order_razorpay",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Orders",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}customer/order/",
+							"host": [
+								"{{local}}customer"
+							],
+							"path": [
+								"order",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Order details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}customer/order/view/6/",
+							"host": [
+								"{{local}}customer"
+							],
+							"path": [
+								"order",
+								"view",
+								"6",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Order",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}customer/order/cancel/6/",
+							"host": [
+								"{{local}}customer"
+							],
+							"path": [
+								"order",
+								"cancel",
+								"6",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Return Products",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}customer/order/return_products/",
+							"host": [
+								"{{local}}customer"
+							],
+							"path": [
+								"order",
+								"return_products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Return Product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"returned_reason\":\"Not Good Quality\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}customer/order/return_product/3/",
+							"host": [
+								"{{local}}customer"
+							],
+							"path": [
+								"order",
+								"return_product",
+								"3",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Replace Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}customer/",
+							"host": [
+								"{{local}}customer"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Replace Product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"replacement_reason\":\"jcebskecd\",\n    \"replace_product_size\":1,\n    \"replace_product_color\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}customer/order/replace_product/4/",
+							"host": [
+								"{{local}}customer"
+							],
+							"path": [
+								"order",
+								"replace_product",
+								"4",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

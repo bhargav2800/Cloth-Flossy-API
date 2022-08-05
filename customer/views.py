@@ -39,7 +39,7 @@ class ViewProductDetail(APIView):
         if isinstance(product, Response):
             return Response({'msg': 'Product Does Not Exist !'}, status=status.HTTP_404_NOT_FOUND)
         serializer = ViewProductSerializer(product)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class ViewSearchedProduct(APIView):
@@ -49,14 +49,14 @@ class ViewSearchedProduct(APIView):
             Q(name__icontains=q) | Q(short_line__icontains=q) | Q(brand__brand_name__icontains=q) | Q(
                 category__name__icontains=q))
         serializer = ViewProductSerializer(product, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class ViewTrendingProduct(APIView):
     def get(self, request):
         product = Product.objects.order_by('no_of_purchases')[:10]
         serializer = ViewProductSerializer(product, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class CartAddRemoveUpdateView(APIView):
@@ -71,7 +71,7 @@ class CartAddRemoveUpdateView(APIView):
     def get(self, request):
         cart_products = Cart.objects.filter(customer__user=self.request.user)
         serializer = CartSerializer(cart_products, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, id=None):
         if Cart.objects.filter(product__id=id, customer__user=self.request.user).exists():
@@ -86,7 +86,7 @@ class CartAddRemoveUpdateView(APIView):
         cart_product = self.get_cart_product_object(id)
         if isinstance(cart_product, Response):
             return Response({'msg': 'Product Does Not Exist In Your Cart!'}, status=status.HTTP_404_NOT_FOUND)
-
+        print(request.data)
         serializer = CartSerializer(cart_product, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         if serializer.validated_data['added_quantity'] > cart_product.product.quantity:
@@ -115,7 +115,7 @@ class WishListAddRemoveUpdateView(APIView):
     def get(self, request):
         wishlist_products = WishList.objects.filter(customer__user=self.request.user)
         serializer = WishListSerializer(wishlist_products, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
     def post(self, request, id=None):
@@ -125,7 +125,7 @@ class WishListAddRemoveUpdateView(APIView):
             serializer = WishListSerializer(data={'product': id}, partial=True)
             serializer.is_valid(raise_exception=True)
             serializer.save(customer = Customer.objects.get(user=self.request.user))
-            return Response({'msg': 'Product Added To Cart Successfully'}, status=status.HTTP_200_OK)
+            return Response({'msg': 'Product Added To Wishlist Successfully'}, status=status.HTTP_200_OK)
 
 
     def delete(self, request, id=None):
@@ -196,7 +196,7 @@ class FavouriteBrands(APIView):
     def get(self, request, id=None):
         fav_brands = Favourites.objects.filter(customer__user=self.request.user)
         serializer = FavouriteBrandSerializer(fav_brands, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class OrderBuyCartCod(APIView):
@@ -274,9 +274,6 @@ class OrderBuyCartRazorpay(APIView):
                     "razorpay_order_id": razorpay_order['id']
                 },
             })
-
-
-
 
             return Response({'response': payment}, status=status.HTTP_200_OK)
         else:
@@ -375,7 +372,7 @@ class OrderDetail(APIView):
         except Order.DoesNotExist:
             return Response({"msg": 'Order Does Not Exist'}, status=status.HTTP_404_NOT_FOUND)
 
-        Invoice.objects.filter(order=order).update(delivery_status='Canceled')
+        Invoice.objects.filter(order=order).update(status='Canceled')
         order.order_status = 'CANCELED'
         order.save()
         return Response({'msg':'Order Has Been Cancled Successfullys'}, status=status.HTTP_200_OK)
